@@ -4,7 +4,7 @@
 var canvas;
 var gl;
 
-var NumVertices  = 36;
+var NumVertices  = 18; // 밑면 삼각형 두개(6개) + 옆면 삼각형 각각 3개(3*4=12) = 18
 
 var points = [];
 var colors = [];
@@ -27,7 +27,7 @@ window.onload = function init()
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
-    colorCube();
+    colorPyramid();
 
     gl.viewport( 0, 0, canvas.width, canvas.height );
     gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
@@ -98,39 +98,24 @@ window.onload = function init()
     render();
 }
 
-function colorCube()
+function colorPyramid()
 {
-    quad( 1, 0, 3, 2 );
-    quad( 2, 3, 7, 6 );
-    quad( 3, 0, 4, 7 );
-    quad( 6, 5, 1, 2 );
-    quad( 4, 5, 6, 7 );
-    quad( 5, 4, 0, 1 );
+    triple( 0, 1, 2 ); // 앞면
+    triple( 2, 1, 3 ); // 우측면
+    triple( 3, 2, 4 ); // 뒷면
+    triple( 4, 2, 0 ); // 좌측면
+    triple( 1, 0, 4 ); // 밑면1
+    triple( 1, 3, 4 ); // 밑면2
 }
 
-function quad(a, b, c, d)
+function triple(a, b, c)
 {
-    /*
     var vertices = [
-        vec4( -0.5, -0.5,  0.5, 1.0 ),
-        vec4( -0.5,  0.5,  0.5, 1.0 ),
-        vec4(  0.5,  0.5,  0.5, 1.0 ),
-        vec4(  0.5, -0.5,  0.5, 1.0 ),
-        vec4( -0.5, -0.5, -0.5, 1.0 ),
-        vec4( -0.5,  0.5, -0.5, 1.0 ),
-        vec4(  0.5,  0.5, -0.5, 1.0 ),
-        vec4(  0.5, -0.5, -0.5, 1.0 )
-    ];
-    */
-    var vertices = [
-      vec4( -0.5, -0.5,  0.5, 1.0 ),
-      vec4( -0.0,  0.5,  0.0, 1.0 ),
-      vec4(  0.0,  0.5,  0.0, 1.0 ),
-      vec4(  0.5, -0.5,  0.5, 1.0 ),
-      vec4( -0.5, -0.5, -0.5, 1.0 ),
-      vec4( -0.0,  0.5, -0.0, 1.0 ),
-      vec4(  0.0,  0.5, -0.0, 1.0 ),
-      vec4(  0.5, -0.5, -0.5, 1.0 )
+      vec4( -0.5, -0.5,  0.5, 1.0 ), // 좌측 앞
+      vec4(  0.5, -0.5,  0.5, 1.0 ), // 우측 앞
+      vec4(  0.0,  0.5,  0.0, 1.0 ), // 꼭대기
+      vec4(  0.5, -0.5, -0.5, 1.0 ), // 우측 뒤
+      vec4( -0.5, -0.5, -0.5, 1.0 )  // 좌측 뒤
     ];
 
     var vertexColors = [
@@ -138,19 +123,12 @@ function quad(a, b, c, d)
         [ 1.0, 0.0, 0.0, 1.0 ],  // red
         [ 1.0, 1.0, 0.0, 1.0 ],  // yellow
         [ 0.0, 1.0, 0.0, 1.0 ],  // green
-        [ 0.0, 0.0, 1.0, 1.0 ],  // blue
-        [ 1.0, 0.0, 1.0, 1.0 ],  // magenta
-        [ 0.0, 1.0, 1.0, 1.0 ],  // cyan
-        [ 1.0, 1.0, 1.0, 1.0 ]   // white
+        [ 0.0, 0.0, 1.0, 1.0 ]  // blue
     ];
-
-    // We need to parition the quad into two triangles in order for
-    // WebGL to be able to render it.  In this case, we create two
-    // triangles from the quad indices
 
     //vertex color assigned by the index of the vertex
 
-    var indices = [ a, b, c, a, c, d ];
+    var indices = [ a, b, c ];
 
     for ( var i = 0; i < indices.length; ++i ) {
         points.push( vertices[indices[i]] );
