@@ -102,10 +102,10 @@ function colorPyramid()
 {
     triple( 0, 1, 2 ); // 앞면
     triple( 2, 1, 3 ); // 우측면
-    triple( 3, 2, 4 ); // 뒷면
-    triple( 4, 2, 0 ); // 좌측면
+    triple( 3, 4, 2 ); // 뒷면
+    triple( 4, 0, 2 ); // 좌측면
     triple( 1, 0, 4 ); // 밑면1
-    triple( 1, 3, 4 ); // 밑면2
+    triple( 1, 4, 3 ); // 밑면2
 }
 
 function triple(a, b, c)
@@ -132,7 +132,7 @@ function triple(a, b, c)
 
     for ( var i = 0; i < indices.length; ++i ) {
         points.push( vertices[indices[i]] );
-        //colors.push( vertexColors[indices[i]] );
+        // colors.push( vertexColors[indices[i]] );
 
         // for solid colored faces use
         colors.push(vertexColors[a]);
