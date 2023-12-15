@@ -177,6 +177,16 @@ window.onload = function init() {
     initNodes(bodyID);
     console.log("theta[bodyID]: "+theta[bodyID]);
   }
+  document.getElementById("slider1").onchange = function(event) {
+    theta[headID] = event.target.value;
+    initNodes(headID);
+    console.log("theta[headID]: "+theta[headID]);
+  }
+  document.getElementById("slider2").onchange = function(event) {
+    theta[tailID] = event.target.value;
+    initNodes(tailID);
+    console.log("theta[tailID]: "+theta[tailID]);
+  }
 
   for(i=0; i<numNodes; i++) initNodes(i);
 
